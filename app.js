@@ -28,12 +28,11 @@ const allowedExt = [
     '.gif'
 ];
 
-
 app.get('*', (req, res) => {
     if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
-        res.sendFile(path.resolve(`dist/${req.url}`));
+        res.sendFile(path.resolve(`dist/blueswan-frontend/${req.url}`));
     } else {
-        res.sendFile(path.resolve('dist/index.html'));
+        res.sendFile(path.resolve('dist/blueswan-frontend/index.html'));
     }
 });
 
