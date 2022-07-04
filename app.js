@@ -25,7 +25,8 @@ const allowedExt = [
     '.ttf',
     '.tif',
     '.svg',
-    '.gif'
+    '.gif',
+    '.webp'
 ];
 
 app.get('*', (req, res) => {
