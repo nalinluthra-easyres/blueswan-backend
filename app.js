@@ -3,6 +3,7 @@ require('./config/config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+var path = require('path');
 
 const rtsIndex = require('./routes/index.router')
 
