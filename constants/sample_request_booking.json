@@ -1,0 +1,33 @@
+{
+    "tripId": "",
+    "tripName": "",
+    "departureDate": "",
+    "numberOfAdults": "",
+    "contact": {
+        "name": "",
+        "email" : "",
+        "mobile": "",
+        "address": ""
+    },
+    "payment": {
+        "currency": "",
+        "bookingType": "",
+        "modePayment": "",
+        "paymentType": "",
+        "paidAmount": ""
+    },
+    "guestList" : [
+        {
+            "firstName": "",
+            "lastName": "",
+            "dob": "",
+            "gender": "",
+            "roomOccupancy": "",
+            "sharingRoomWith": "",
+            "typeOfBed": "",
+            "price": "",
+            "specialDietaryRequirements": "",
+            "medicalCondition": ""
+        }
+    ]
+}
