@@ -20,9 +20,33 @@ module.exports.bookTrip = async (req,res) => {
         // Setting the header for proper update of the entries
         await sheet.loadHeaderRow(2);
 
+        let BookingDate = new Date();
+
+        let dateArray = req.body.departureDate.split("-");
+        let DepartureDate = new Date(dateArray[2], dateArray[1] - 1, dateArray[0]);
+        
+        let responseMessage = '';
+
+        DepartureDate.setMonth(DepartureDate.getMonth() - 3);
+
+        if(req.body.payment.paymentType === 'Tour Deposit') {
+            responseMessage = "We have recorded your intent of depositing an amount of " + 
+            req.body.payment.currency + " " + req.body.payment.paidAmount + 
+            " , into our bank account. We shall monitor the credit of this transaction and reach out to you on confirmation. Once the payment has been traced, it would ensure that " + 
+            req.body.numberOfAdults + " seat/ seats has been reserved for you on the tour. The balance payment should be done or before " 
+            + DepartureDate.toLocaleDateString() + " , i.e. 3 months before departure date. "
+        } else {
+            responseMessage = "We have recorded your intent of depositing an amount of " + 
+            req.body.payment.currency + " " + req.body.payment.paidAmount + 
+            " , into our bank account. We shall monitor the credit of this transaction and reach out to you on confirmation. Once the payment has been traced, it would confirm for " +
+            req.body.numberOfAdults + " pax on the tour."
+        }
+        
+        
+
         await sheet.addRow({
-                "Booking ID" : bookingId,
-                "Booking Creation Date/Time": new Date(),
+                "Booking ID" : bookingId, 
+                "Booking Creation Date/Time": BookingDate,
                 "Trip ID": req.body.tripId,
                 "Trip Name": req.body.tripName,
                 "Departure Date (mm-dd-yyyy)": req.body.departureDate,
@@ -57,11 +81,13 @@ module.exports.bookTrip = async (req,res) => {
 
         res.status(200).json({
             status: true,
-            message: "Your payment of " + req.body.payment.currency + " " + req.body.payment.paidAmount  + " as an advance payment for " + req.body.numberOfAdults + " pax has successfully been done and recorded in our system. We shall reach out to you shortly over email and mobile number to confirm with payment vouchers."
+            message: responseMessage
         })
     } catch(e) {
+        console.log(e)
         res.status(200).json({
             status: false,
+            error: e,
             message : 'Internal System Error Please try again Later'
         })
     }
